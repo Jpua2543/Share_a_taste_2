@@ -4,39 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Recipe</title>
-    <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-
-<!-- Navigation Bar (if needed) -->
-<!-- ... -->
-
-<!-- Main Content -->
 <div class="container mt-4">
     <h1 class="mb-4">Edit Recipe</h1>
-
-    <!-- Recipe Form -->
     <form action="/recipes/update/{{ recipe.id }}" method="post">
         <!-- Title -->
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" class="form-control" id="title" name="title" value="{{ recipe.title }}" required>
         </div>
-
-        <!-- Instructions -->
         <div class="form-group">
             <label for="instructions">Instructions</label>
             <textarea class="form-control" id="instructions" name="instructions" rows="4" required>{{ recipe.instructions }}</textarea>
         </div>
-
-        <!-- Duration -->
         <div class="form-group">
             <label for="duration">Duration (minutes)</label>
             <input type="number" class="form-control" id="duration" name="duration" value="{{ recipe.duration }}" required>
         </div>
-
-        <!-- Category Dropdown -->
         <div class="form-group">
             <label for="category">Category</label>
             <select class="form-control" id="category" name="category" required>
@@ -45,26 +31,19 @@
                 {% endfor %}
             </select>
         </div>
-
-        <!-- Description -->
         <div class="form-group">
             <label for="description">Description</label>
             <textarea class="form-control" id="description" name="description" rows="4" required>{{ recipe.description }}</textarea>
         </div>
-
-        <!-- Ingredients -->
         <div class="form-group">
             <label for="ingredients">Ingredients</label>
             <textarea class="form-control" id="ingredients" name="ingredients" rows="4" required>{{ recipe.ingredients }}</textarea>
         </div>
         <input type="hidden" value="{{ recipe_id }}" name="recipe_id">
-
-        <!-- Submit Button -->
         <button type="submit" class="btn btn-primary">Edit Recipe</button>
     </form>
 </div>
 
-<!-- Include Bootstrap JS (jQuery and Popper.js are required) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
