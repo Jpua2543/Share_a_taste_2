@@ -6,75 +6,7 @@
     <title>{{ recipe.title }} - View Recipe</title>
     <!-- Include Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .recipe-container {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-top: 20px;
-        }
-
-        .recipe-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .recipe-title {
-            font-size: 32px;
-            font-weight: bold;
-            color: #343a40;
-        }
-
-        .recipe-meta {
-            color: #6c757d;
-        }
-
-        .recipe-section {
-            margin-bottom: 30px;
-        }
-
-        .recipe-section h2 {
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 5px;
-            margin-bottom: 15px;
-            color: #007bff;
-        }
-
-        .recipe-content {
-            font-size: 18px;
-            line-height: 1.6;
-            color: #343a40;
-        }
-
-        .recipe-ratings-comments {
-            margin-top: 30px;
-        }
-
-        .ratings-comments-header {
-            font-size: 24px;
-            font-weight: bold;
-            color: #343a40;
-            margin-bottom: 20px;
-        }
-
-        .comment-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .comment-item {
-            margin-bottom: 15px;
-            padding: 15px;
-            background-color: #f1f1f1;
-            border-radius: 8px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -103,7 +35,6 @@
         </div>
     </nav>
 
-<!-- Main Content -->
 <div class="container recipe-container">
     <div class="recipe-header">
         <h1 class="recipe-title">{{ recipe.title }}</h1>
@@ -116,23 +47,19 @@
                 <h2>Ingredients</h2>
                 <div class="recipe-content">{{ recipe.ingredients }}</div>
             </div>
-
             <div class="recipe-section">
                 <h2>Description</h2>
                 <div class="recipe-content">{{ recipe.description }}</div>
             </div>
-
             <div class="recipe-section">
                 <h2>Instructions</h2>
                 <div class="recipe-content">{{ recipe.instructions }}</div>
             </div>
         </div>
-
         <div class="col-md-4">
             <div class="recipe-ratings-comments">
                 <h2 class="ratings-comments-header">Ratings</h2>
                 <p class="recipe-content">{{ recipe.ratings }}</p>
-
                 <h2 class="ratings-comments-header">Comments</h2>
                 {% for comment in comments %}
                     <li class="list-group-item">
@@ -145,15 +72,12 @@
                         <p class="mb-0">{{ comment.comment }}</p>
                     </li>
                 {% endfor %}
-
-                 <!-- Add Comment Button -->
-                 <button class="btn btn-primary" data-toggle="modal" data-target="#addCommentModal">Add Comment</button>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addCommentModal">Add Comment</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Add Comment Modal -->
 <div class="modal" id="addCommentModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -164,8 +88,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Add your comment form here -->
-                <!-- Example: -->
                 <form action="/recipes/add_comment/{{ recipe.id }}" method="post">
                     <div class="form-group">
                         <label for="comment">Your Comment</label>
@@ -179,7 +101,6 @@
     </div>
 </div>
 
-<!-- Include Bootstrap JS (jQuery and Popper.js are required) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
