@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share-a-Taste</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/dashboard">Share-a-Taste</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <form class="form-inline ml-auto">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <div class="ml-auto">
+            <div class="nav-item dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="userMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user-circle"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenuButton">
+                    <p class="dropdown-item">{{ name }}</p>
+                    <a class="dropdown-item" href="/my_recipes/{{ user_id }}">My Recipes</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/dashboard">Home</a>
+                    <div class="dropdown-divider" ></div>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container mt-4 centered container-width-80">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Share-a-Taste</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Recipe Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">Date Posted</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recipe in recipes %}
+                        <tr>
+                            <td>{{ recipe.title }}</td>
+                            <td>{{ recipe.category }}</td>
+                            <td>{{ recipe.duration }} Minutes</td>
+                            <td>{{ recipe.created_at }}</td>
+                            <td><a href="/recipes/view/{{ recipe.id }}" class="btn btn-primary">View</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
