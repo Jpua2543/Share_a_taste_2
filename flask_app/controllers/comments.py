@@ -18,5 +18,3 @@ def add_comment():
     }
     Comment.save(data)
     return redirect(f"/comments/{request.form['recipe_id']}")
-
-# Add more routes as needed, such as editing and deleting comments
