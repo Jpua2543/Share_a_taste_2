@@ -78,6 +78,8 @@ class Recipe:
 
     @classmethod
     def delete(cls, recipe_id):
+        comment_delete_query = "DELETE FROM comments WHERE Recipe_id = %(recipe_id)s;"
+        connectToMySQL(cls.DB).query_db(comment_delete_query, {'recipe_id': recipe_id})
         query = "DELETE FROM recipes WHERE id = %(recipe_id)s;"
         data = {"recipe_id": recipe_id}
         return connectToMySQL(cls.DB).query_db(query, data)

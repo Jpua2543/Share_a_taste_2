@@ -20,10 +20,13 @@ def add_comment():
     return redirect(f"/comments/{request.form['recipe_id']}")
 
 @app.route("/recipes/add_comment/<int:recipe_id>", methods=["POST"])
-def add_comment(recipe_id):
+def add_recipe_comment(recipe_id):
     if 'user_id' not in session:
         flash('You must be logged in to comment')
         return redirect('/login')
+
+    if not Comment.validate_comment(request.form):
+        return redirect(f"/recipes/view/{recipe_id}")
 
     data = {
         "user_id": session['user_id'],
@@ -35,14 +38,22 @@ def add_comment(recipe_id):
     Comment.save(data)
     return redirect(f"/recipes/view/{recipe_id}")
 
+
+@app.route("/comments/delete/<int:comment_id>", methods=["POST"])
+def delete_comment(comment_id):
+    comment = Comment.get_by_id(comment_id)
+    if 'user_id' in session and comment and session['user_id'] == comment.user_id:
+        Comment.delete(comment_id)
+        flash('Comment deleted successfully.', 'success')
+    else:
+        flash('Unauthorized action.', 'danger')
+    return redirect(f"/recipes/view/{comment.recipe_id if comment else ''}")
+
 @app.route("/comments/edit/<int:comment_id>", methods=["GET", "POST"])
 def edit_comment(comment_id):
-    if 'user_id' not in session:
-        flash("Please log in to edit comments.", "error")
-        return redirect('/login')
     comment = Comment.get_by_id(comment_id)
-    if comment and session['user_id'] == comment.user_id:
-        if request.method == "POST":
+    if request.method == "POST":
+        if 'user_id' in session and comment and session['user_id'] == comment.user_id:
             if Comment.validate_comment(request.form):
                 updated_comment = {
                     "comment_id": comment_id,
@@ -50,11 +61,15 @@ def edit_comment(comment_id):
                 }
                 Comment.update(updated_comment)
                 flash("Comment updated successfully.", "success")
-                return redirect(f"/recipes/view/{comment.recipe_id}")
             else:
-                return redirect(request.url)
+                flash("Validation failed.", "danger")
+            return redirect(f"/recipes/view/{comment.recipe_id}")
         else:
-            return render_template("edit_comment.html", comment=comment)
+            flash("Unauthorized action.", "danger")
+            return redirect('/dashboard')
+    elif 'user_id' in session and comment and session['user_id'] == comment.user_id:
+        return render_template("edit_comment.html", comment=comment)
     else:
-        flash("Comment not found or you do not have permission to edit this comment.", "error")
+        flash("Unauthorized action.", "danger")
         return redirect('/dashboard')
+

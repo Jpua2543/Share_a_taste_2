@@ -21,7 +21,6 @@ class Rating:
         if not 1 <= rating['rating'] <= 5:
             flash("Rating must be between 1 and 5.")
             is_valid = False
-        # Add more validation rules as needed
         return is_valid
 
     @classmethod

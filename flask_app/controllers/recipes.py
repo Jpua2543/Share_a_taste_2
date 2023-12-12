@@ -46,7 +46,7 @@ def edit_recipe(recipe_id):
     user_id = session['user_id']
     data = { "user_id": user_id }
     if recipe:
-        return render_template("edit_recipe.html", recipe=recipe, recipe_id=recipe_id)
+        return render_template("edit_recipe.html", recipe=recipe, recipe_id=recipe_id, user_id=session['user_id'], name=session['name'])
     else:
         flash("Recipe not found", "error")
         return redirect(f"/my_recipes/{user_id}")

@@ -18,11 +18,10 @@ class Comment:
     @classmethod
     def save(cls, data):
         query = """
-            INSERT INTO comments (User_id, Recipe_id, comment, name, created_at)
-            VALUES (%(User_id)s, %(Recipe_id)s, %(comment)s, %(name)s, NOW());
+            INSERT INTO comments (user_id, recipe_id, comment, name, created_at)
+            VALUES (%(user_id)s, %(recipe_id)s, %(comment)s, %(name)s, NOW());
         """
-        result = connectToMySQL(cls.DB).query_db(query, data)
-        return result
+        return connectToMySQL(cls.DB).query_db(query, data)
 
     @classmethod
     def get_comments_by_recipe(cls, recipe_id):
@@ -58,4 +57,10 @@ class Comment:
             SET comment = %(comment)s
             WHERE id = %(comment_id)s;
         """
+        return connectToMySQL(cls.DB).query_db(query, data)
+
+    @classmethod
+    def delete(cls, comment_id):
+        query = "DELETE FROM comments WHERE id = %(comment_id)s;"
+        data = {'comment_id': comment_id}
         return connectToMySQL(cls.DB).query_db(query, data)
