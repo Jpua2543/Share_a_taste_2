@@ -18,3 +18,20 @@ def add_rating():
     }
     Rating.save(data)
     return redirect(f"/ratings/{request.form['recipe_id']}")
+
+
+
+# @app.route("/recipes/add_rating/<int:recipe_id>", methods=["POST"])
+# def add_recipe_rating(recipe_id):
+#     if 'user_id' not in session:
+#         flash('You must be logged in to rate')
+#         return redirect('/login')
+#     if not Rating.validate_rating(request.form):
+#         return redirect(f"/recipes/view/{recipe_id}")
+#     data = {
+#         "user_id": session['user_id'],
+#         "recipe_id": recipe_id,
+#         "rating": request.form['rating']
+#     }
+#     Rating.save(data)
+#     return redirect(f"/recipes/view/{recipe_id}")

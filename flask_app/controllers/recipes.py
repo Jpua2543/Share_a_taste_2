@@ -2,6 +2,8 @@ from flask import render_template, request, redirect, session, flash, Blueprint
 from flask_app import app
 from flask_app.models.recipe import Recipe
 from flask_app.models.comment import Comment
+from flask_app.models.rating import Rating
+
 
 @app.route("/my_recipes/<int:user_id>")
 def recipes_by_user_id(user_id):
@@ -30,15 +32,22 @@ def update_recipe(recipe_id):
 @app.route("/recipes/view/<int:recipe_id>")
 def view_recipe(recipe_id):
     recipe = Recipe.get_by_id(recipe_id)
-    user_id = session['user_id']
-    name=session['name']
-    data = { "user_id": user_id }
+    ratings = Rating.get_ratings_by_recipe(recipe_id)
     comments = Comment.get_comments_by_recipe(recipe_id)
+    user_id = session.get('user_id')
+    name = session.get('name')
     if recipe:
-        return render_template("view_recipe.html", recipe=recipe, user_id=user_id,name=name,comments=comments)
+        return render_template(
+            "view_recipe.html",
+            recipe=recipe,
+            user_id=user_id,
+            name=name,
+            comments=comments,
+            ratings=ratings
+        )
     else:
         flash("Recipe not found", "error")
-        return redirect(f"/dashboard")
+        return redirect("/dashboard")
 
 @app.route("/recipes/edit/<int:recipe_id>")
 def edit_recipe(recipe_id):

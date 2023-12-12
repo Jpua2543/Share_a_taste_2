@@ -57,6 +57,17 @@
             <div class="recipe-ratings-comments">
                 <h2 class="ratings-comments-header">Ratings</h2>
                 <p class="recipe-content">{{ recipe.ratings }}</p>
+                <div class="current-ratings">
+                    {% for rating in ratings %}
+                        <p>Rating: {{ rating.rating }} by {{ rating.user_name }}</p>
+                    {% endfor %}
+                </div>
+                <form action="/recipes/add_rating/<int:recipe_id>" method="post">
+                    <input type="hidden" name="recipe_id" value="{{ recipe.id }}">
+                    <input type="number" name="rating" min="1" max="5">
+                    <label for="rating">Rate this recipe:</label>
+                    <button type="submit" class="btn btn-primary">Submit Rating</button>
+                </form>
                 <h2 class="ratings-comments-header">Comments</h2>
                 {% for comment in comments %}
                     <li class="list-group-item">

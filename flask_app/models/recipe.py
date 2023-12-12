@@ -21,7 +21,7 @@ class Recipe:
     @staticmethod
     def validate_recipe(recipe):
         is_valid = True
-        if len(recipe['title']) < 3:
+        if len(recipe['title']) < 1:
             flash("Recipe title must be at least 3 characters.")
             is_valid = False
         if len(recipe['description']) < 3:
